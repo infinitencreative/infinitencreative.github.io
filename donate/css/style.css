@@ -32,6 +32,12 @@ h3 {
     margin-bottom: 20px;
     font-size: 24px;
 }
+img.emoji {
+   height: 2em;
+   width: 2em;
+   margin: .5em;
+   vertical-align: -0.5em;
+}
 
 /* main */
 .main {
@@ -96,7 +102,7 @@ h3 {
 .intro h3 {
     /*color: #FA4210;*/
 }
-.intro img {
+.intro .brand-logo {
     width: 118px;
     height: 118px;
     margin-top: 50px;
@@ -104,6 +110,12 @@ h3 {
 }
 .intro .intro-text-gap {
     margin-bottom: 50px;
+}
+#twemojiDiv {
+    margin-top: 20px;
+}
+#twemojiDiv ul li {
+    display: inline-block;
 }
 
 /* mobile and tab */

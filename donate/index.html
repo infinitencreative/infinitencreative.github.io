@@ -29,15 +29,22 @@
         <div class="col-12 col-3 layout-center">
             <div class="content intro">
                 <!-- intro -->
-                <img src="images/infiniten-logo.png">
+                <img src="images/infiniten-logo.png" class="brand-logo">
                 <p class="intro-text-gap">Thanks for your donation.<br/>We will do more and more awsome jobs~</p>
                 <h3>Contact Us</h3>
                 <p class="intro-text-gap">You can give us feedbacks or share your ideas via E-mail.<br/>Always waiting for your reply.<br/><br/>E-mail: InfiniteNDev@hotmail.com<br/>Skype: InfiniteNDev@hotmail</p>
 
                 <!-- rates -->
                 <h3>Rates</h3>
-                <p class="intro-text-gap">What do you think of our products.</p>
-
+                <p >What do you think of our products.</p>
+                <div class="intro-text-gap" id="twemojiDiv">
+                    <ul>
+                        <li data-toggle="vote_0" class="vote vote_0">😂<span class="vote_times"></span></li>
+                        <li data-toggle="vote_1" class="vote vote_1">😉<span class="vote_times"></span></li>
+                        <li data-toggle="vote_2" class="vote vote_2">😘<span class="vote_times"></span></li>
+                        <li data-toggle="vote_3" class="vote vote_3">😱<span class="vote_times"></span></li>
+                    </ul>
+                </div>
                 <!-- 友言 -->
                 <!-- UY BEGIN -->
                 <div id="uyan_frame"></div>
@@ -47,5 +54,51 @@
             </div>
         </div>
     </div>
+    
+    <script src="js/jquery-1.12.2.min.js" type="text/javascript" charset="utf-8" ></script>
+    <script src="//cdn.bootcss.com/twemoji/2.0.5/twemoji.min.js"></script>
+    <script type="text/javascript" charset="utf-8" >
+        // twitter emoji
+        twemoji.parse(document.getElementById('twemojiDiv'));
+    </script>
+    <script src="https://cdn1.lncld.net/static/js/av-mini-0.6.4.js"></script>
+    <script type="text/javascript" charset="utf-8" >
+        // init leancloud
+        AV.initialize('dBem979wbsfCmHAMiEulmaX4-gzGzoHsz', 'OJ9UX5WYSuNIGrKhL93GpfdU');
+        // get app object
+        var App = AV.Object.extend('app');
+        // get app query
+        var appQuery = new AV.Query(App);
+
+        // get vote data
+        appQuery.get('56fbcd6e1ea493005db40852').then(function(app){
+            var vote_0_times = app.get('vote_0');
+            var vote_1_times = app.get('vote_1');
+            var vote_2_times = app.get('vote_2');
+            var vote_3_times = app.get('vote_3');
+
+            $('.vote_0 span').html('+' + vote_0_times);
+            $('.vote_1 span').html('+' + vote_1_times);
+            $('.vote_2 span').html('+' + vote_2_times);
+            $('.vote_3 span').html('+' + vote_3_times);
+        }, function(error) {
+            console.log(error);
+        });
+
+        // check vote
+        $('#twemojiDiv .vote').on('click', function() {
+            var elem = this.dataset.toggle;
+            appQuery.get('56fbcd6e1ea493005db40852').then(function(app){
+                app.increment(elem);
+                app.save().then(function(app) {
+                    $('.' + elem + ' span').html('+' + app.get(elem));
+                }, function(error) {
+                    console.log('save upvotes error ' + error);
+                });
+            }, function(error) {
+                console.log(error);
+            });
+        });
+    </script>
 </body>
 </html>
